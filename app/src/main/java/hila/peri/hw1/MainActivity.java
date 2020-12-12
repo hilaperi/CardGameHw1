@@ -1,5 +1,6 @@
 package hila.peri.hw1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.graphics.Typeface;
@@ -7,135 +8,110 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 import java.util.Random;
 
-public class MainActivity extends  Activity {
+public class MainActivity extends AppCompatActivity {
     private static ArrayList<Activity> activities = new ArrayList<>();
 
-    ImageView cardLeftImage, cardRightImage,buttonBattle,manLeftImage,ladyLeftImage;
-    TextView scoreLeft, scoreRight;
+    private final int NUMBER_OF_CARDS = 14;
+    ImageView cardLeftImage, cardRightImage, buttonBattle, manLeftImage, ladyLeftImage;
+    TextView scoreLeft, scoreRight, winner_TXT_man, winner_TXT_woman;
     Button buttonRestart;
     String gameCompetitionStatus = "competing";
     Typeface font;
+    Deck warDeck;
+    private int playerScoreA = 0, playerScoreB = 0;
 
-    Random r = new Random();
+   // Random r = new Random();
 
-    int maxScore = 7;
-    int leftScore, rightScore = 0;
+  //  int maxScore = 7;
+    //int leftScore, rightScore = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activities.add(this);
         setContentView(R.layout.activity_main);
+        findViews();
+        initViews();
 
+    }
+    private void findViews() {
         //Define of button and image
         cardLeftImage = findViewById(R.id.main_IMG_leftCard);
         cardRightImage = findViewById(R.id.main_IMG_rightCard);
         scoreLeft = findViewById(R.id.main_LBL_scoreLeft);
         scoreRight = findViewById(R.id.main_LBL_scoreRight);
         buttonBattle = findViewById(R.id.main_BTN_play);
-        buttonRestart = findViewById(R.id.main_BTN_restart);
         manLeftImage = findViewById(R.id.main_IMG_man);
         ladyLeftImage = findViewById(R.id.main_IMG_lady);
 
+    }
 
-       //Define start game with "buttonBattle"
+    private void initViews() {
+        //Define start game with "buttonBattle"
+        initDeck();
         buttonBattle.setOnClickListener(new View.OnClickListener() {
             @Override
-
             public void onClick(View v) {
-                // generate the two card numbers
-                int leftCard = r.nextInt(13) + 2; // this is for cards 2 - 14
-                int rightCard = r.nextInt(13) + 2; // this is for cards 2 - 14
-
-                int leftImage = getDrawableCard(leftCard);
-                cardLeftImage.setImageResource(leftImage);
-
-                int rightImage = getDrawableCard(rightCard);
-                cardRightImage.setImageResource(rightImage);
-
-
-                // compare cards, add points and update score
-                if (leftCard > rightCard) {
-                    leftScore++;
-                    setScoreLeft(String.valueOf(leftScore));
-
-                } else if (leftCard < rightCard) {
-                    rightScore++;
-                    setScoreRight(String.valueOf(rightScore));
-                }
-
-                // Check competition
-
-                if (leftScore == maxScore && rightScore == maxScore) {
-                    gameCompetitionStatus = "draw"; }
-                else if (leftScore >= maxScore) {
-                    gameCompetitionStatus = "left_wins";}
-                else if (rightScore >= maxScore) {
-                    gameCompetitionStatus = "right_wins"; }
-
-
-                if (gameCompetitionStatus.equals("draw")) {
-                    hideThingsMakeRestartButtonVisible();
-                    setScoreLeft("Draw!!");
-
-                } else if (gameCompetitionStatus.equals("left_wins")) {
-                    hideThingsMakeRestartButtonVisible();
-                    scoreLeft.setText(R.string.congratsWoman);
-
-                } else if (gameCompetitionStatus.equals("right_wins")) {
-                    hideThingsMakeRestartButtonVisible();
-                    scoreLeft.setText(R.string.congratsMan);
-
-                }
-
-            }
-            //The screen after the win
-            private void hideThingsMakeRestartButtonVisible() {
-                scoreRight.setVisibility(View.GONE);
-                cardLeftImage.setVisibility(View.GONE);
-                cardRightImage.setVisibility(View.GONE);
-                buttonBattle.setVisibility(View.GONE);
-                ladyLeftImage.setVisibility(View.GONE);
-                manLeftImage.setVisibility(View.GONE);
-                buttonRestart.setVisibility(View.VISIBLE);
-            }
-
-
-        });
-
-        // Listen Restart button which will restart the game
-
-        buttonRestart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                restartGame();
+                playTurn();
             }
         });
 
-
     }
 
-    private int getDrawableCard(int card) {
-        return getResources().getIdentifier("card" + card, "drawable", getPackageName());
+    private void initDeck() {
+        warDeck = new Deck();
+        for (int i = 1; i <= NUMBER_OF_CARDS; i++) {
+            warDeck.addCard("card_" + i, i);
+        }
+        warDeck.shuffleCards();
     }
 
-    private void setScoreRight(String s) {
-        scoreRight.setText(String.valueOf(s));
+
+    private void playTurn() {
+        Cards playerCardA = warDeck.getCard();
+        Cards playerCardB = warDeck.getCard();
+
+        setNewCardsImage(playerCardA.getImageName(), playerCardB.getImageName());
+
+        setScore(playerCardA, playerCardB);
+
+        if (warDeck.isEmpty()) {
+            displayWinner();
+        }
     }
 
-    private void setScoreLeft(String s) {
-        scoreLeft.setText(s);
+    private void setNewCardsImage(String imageNameA, String imageNameB) {
+        int playerDrawableA = this.getResources().getIdentifier(imageNameA, "drawable", this.getPackageName());
+        int playerDrawableB = this.getResources().getIdentifier(imageNameB, "drawable", this.getPackageName());
+
+        cardLeftImage.setImageDrawable(getDrawable(playerDrawableA));
+        cardRightImage.setImageDrawable(getDrawable(playerDrawableB));
     }
-    
-    private void restartGame() {
 
-        for (Activity activity : activities)
-            activity.recreate();
-
-
+    private void setScore(Cards playerCardA, Cards playerCardB) {
+        if (playerCardA.isStronger(playerCardB)) {
+            playerScoreA++;
+            scoreLeft.setText(playerScoreA + "");
+        } else {
+            playerScoreB++;
+            scoreRight.setText(playerScoreB + "");
+        }
     }
+
+    private void displayWinner() {
+        Intent intent = new Intent(this, winPage.class);
+        intent.putExtra(winPage.playerScoreA, "" + playerScoreA);
+        intent.putExtra(winPage.playerScoreB, "" + playerScoreB);
+        startActivity(intent);
+        finish();
+    }
+
+
+
 }
+

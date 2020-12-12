@@ -3,4 +3,7 @@
     <string name="battle">BATTLE</string>
     <string name="congratsMan">Congratulations! The man win!</string>
     <string name="congratsWoman">Congratulations! The woman win!</string>
-    <string name="restart">Restart</string></resources>
+    <string name="game_over">Game Over</string>
+
+    <string name="restart">Restart</string>
+</resources>
