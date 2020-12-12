@@ -3,31 +3,24 @@ package hila.peri.hw1;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
-import android.graphics.Typeface;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     private static ArrayList<Activity> activities = new ArrayList<>();
 
     private final int NUMBER_OF_CARDS = 14;
     ImageView cardLeftImage, cardRightImage, buttonBattle, manLeftImage, ladyLeftImage;
-    TextView scoreLeft, scoreRight, winner_TXT_man, winner_TXT_woman;
-    Button buttonRestart;
-    String gameCompetitionStatus = "competing";
-    Typeface font;
-    Deck warDeck;
-    private int playerScoreA = 0, playerScoreB = 0;
+    TextView scoreLeft, scoreRight;
+    Deck Decks;
+    private int playerLeftScoreA = 0, playerRightScoreB = 0;
 
    // Random r = new Random();
-
   //  int maxScore = 7;
     //int leftScore, rightScore = 0;
 
@@ -53,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViews() {
         //Define start game with "buttonBattle"
-        initDeck();
+        randCards();
         buttonBattle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,24 +56,24 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void initDeck() {
-        warDeck = new Deck();
+    private void randCards() {
+        Decks = new Deck();
         for (int i = 1; i <= NUMBER_OF_CARDS; i++) {
-            warDeck.addCard("card_" + i, i);
+            Decks.addCard("card_" + i, i);
         }
-        warDeck.shuffleCards();
+        Decks.shuffleCards();
     }
 
 
     private void playTurn() {
-        Cards playerCardA = warDeck.getCard();
-        Cards playerCardB = warDeck.getCard();
+        Cards playerLeftCard = Decks.getCard();
+        Cards playerRightCard = Decks.getCard();
 
-        setNewCardsImage(playerCardA.getImageName(), playerCardB.getImageName());
+        setNewCardsImage(playerLeftCard.getImageName(), playerRightCard.getImageName());
 
-        setScore(playerCardA, playerCardB);
+        setScore(playerLeftCard, playerRightCard);
 
-        if (warDeck.isEmpty()) {
+        if (Decks.isEmpty()) {
             displayWinner();
         }
     }
@@ -95,18 +88,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void setScore(Cards playerCardA, Cards playerCardB) {
         if (playerCardA.isStronger(playerCardB)) {
-            playerScoreA++;
-            scoreLeft.setText(playerScoreA + "");
+            playerLeftScoreA++;
+            scoreLeft.setText(playerLeftScoreA + "");
         } else {
-            playerScoreB++;
-            scoreRight.setText(playerScoreB + "");
+            playerRightScoreB++;
+            scoreRight.setText(playerRightScoreB + "");
         }
     }
 
     private void displayWinner() {
         Intent intent = new Intent(this, winPage.class);
-        intent.putExtra(winPage.playerScoreA, "" + playerScoreA);
-        intent.putExtra(winPage.playerScoreB, "" + playerScoreB);
+        intent.putExtra(winPage.playerLeftScore, "" + playerLeftScoreA);
+        intent.putExtra(winPage.playerRightScore, "" + playerRightScoreB);
         startActivity(intent);
         finish();
     }

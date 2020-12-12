@@ -6,16 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.view.View.OnClickListener;
 import android.content.Intent;
 
-import android.app.Activity;
-
-import java.util.ArrayList;
-
 public class winPage extends AppCompatActivity {
-    public static final String playerScoreA = "PLAYER_A_SCORE";
-    public static final String playerScoreB = "PLAYER_B_SCORE";
+    public static final String playerLeftScore = "PLAYER_A_SCORE";
+    public static final String playerRightScore = "PLAYER_B_SCORE";
     //private static ArrayList<Activity> activities = new ArrayList<>();
     TextView winner_LBL_game_over, winner_TXT_name;
     Button main_BTN_restart;
@@ -47,14 +42,18 @@ public class winPage extends AppCompatActivity {
 
     private void displayWinner() {
         Intent intent = getIntent();
-        String scoreA = intent.getStringExtra(playerScoreA);
-        String scoreB = intent.getStringExtra(playerScoreB);
-        String playerName;
+        String scoreA = intent.getStringExtra(playerLeftScore);
+        String scoreB = intent.getStringExtra(playerRightScore);
+        String playerName= null;
 
         if (Integer.parseInt(scoreA) > Integer.parseInt(scoreB)) {
             playerName = "The woman";
-        } else {
+        }
+        if (Integer.parseInt(scoreA) < Integer.parseInt(scoreB)) {
             playerName = "the man";
+        }
+        if (Integer.parseInt(scoreA) == Integer.parseInt(scoreB)) {
+            playerName = "the both player";
         }
 
         winner_TXT_name.setText("Congratulations " + playerName + " win!");
