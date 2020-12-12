@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>nl.dionsegijn</groupId>
+  <artifactId>konfetti</artifactId>
+  <version>1.2.5</version>
+  <packaging>aar</packaging>
+  <name>konfetti</name>
+  <description>Lightweight particle system to celebrate with confetti in your app</description>
+  <url>https://github.com/DanielMartinus/Konfetti</url>
+  <licenses>
+    <license>
+      <name>ISC</name>
+      <url>https://github.com/DanielMartinus/Konfetti/blob/master/LICENSE</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>danielmartinus</id>
+      <name>Dion Segijn</name>
+      <email>danielsegijn@gmail.com</email>
+    </developer>
+  </developers>
+  <scm>
+    <connection>https://github.com/DanielMartinus/Konfetti.git</connection>
+    <developerConnection>https://github.com/DanielMartinus/Konfetti.git</developerConnection>
+    <url>https://github.com/DanielMartinus/Konfetti</url>
+  </scm>
+</project>

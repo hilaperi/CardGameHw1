@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="countDownBackground">#6A6A6A</color>
+    <color name="countDownForeground">#FFFFFF</color>
+    <color name="countDownText">#FFFFFF</color>
+    <declare-styleable name="CircularCountdown"><attr format="dimension" name="countdownTextSize"/><attr format="color" name="countdownTextColor"/><attr format="color" name="countdownForegroundColor"/><attr format="color" name="countdownBackgroundColor"/></declare-styleable>
+    <dimen name="circularCountdownTextSize">14sp</dimen>
+</resources>

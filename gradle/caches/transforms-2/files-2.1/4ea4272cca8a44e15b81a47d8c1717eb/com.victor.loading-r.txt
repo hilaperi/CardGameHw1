@@ -1,0 +1,22 @@
+com.victor.loading
+attr cradle_ball_color
+attr loading_color
+attr loading_speed
+attr loading_width
+attr shadow_position
+color book_loading_background
+color book_loading_book
+color book_loading_page
+dimen book_border
+dimen book_padding
+dimen page_border
+id ball_five
+id ball_four
+id ball_one
+id ball_three
+id ball_two
+layout book_loading
+layout newton_cradle_loading
+string app_name
+styleable CradleBall cradle_ball_color
+styleable RotateLoading loading_color loading_speed loading_width shadow_position

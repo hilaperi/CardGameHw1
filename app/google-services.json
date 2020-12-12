@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "296168334332",
+    "project_id": "app-card-game-1607772906920",
+    "storage_bucket": "app-card-game-1607772906920.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:296168334332:android:4542a7e4b542bfd3e68879",
+        "android_client_info": {
+          "package_name": "hila.peri.hw1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "296168334332-7mighubpggnt11r0vaa9ccpc9itpqjp6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "hila.peri.hw1",
+            "certificate_hash": "3e4bc64e7a933ee2e608d872f19972590e073bc4"
+          }
+        },
+        {
+          "client_id": "296168334332-ltfi8buq13gbjncg17s3l83nke6bb656.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3IqXfUe7wvi3s7qmOCz5IEYYcXOcEtHE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "296168334332-ltfi8buq13gbjncg17s3l83nke6bb656.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
